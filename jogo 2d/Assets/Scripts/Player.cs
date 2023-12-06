@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,7 @@ public class Player : MonoBehaviour
 {
     private Rigidbody2D rb;
     public int Velocidade = 10;
+    public Vector2 Direcao;
     
     // Start is called before the first frame update
     void Start()
@@ -17,10 +19,11 @@ public class Player : MonoBehaviour
     void Update()
     {
         float x = Input.GetAxisRaw("Horizontal");
-        float y = Input.GetAxisRaw("Vertical");
+        Direcao = new Vector2(x,0);
+    }
 
-        Vector2 Direcao = new Vector2(x, y);
-
+    private void FixedUpdate()
+    {
         rb.velocity = Direcao.normalized * Velocidade;
     }
 }
