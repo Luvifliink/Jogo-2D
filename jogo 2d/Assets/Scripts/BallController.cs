@@ -19,9 +19,15 @@ public class BallController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Direcao = Vector2.Reflect(Direcao, collision.contacts[0].normal)
+        Direcao = Vector2.Reflect(Direcao, collision.contacts[0].normal);
+        
         if (collision.gameObject.CompareTag("Block")){
             Destroy (collision.gameObject);
+        }
+        
+        if (collision.gameObject.CompareTag("GameOver")){
+            GameManager.instance.GameOver();
+            Destroy (this.gameObject);
         }
     }
     
