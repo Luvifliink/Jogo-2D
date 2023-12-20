@@ -15,14 +15,32 @@ public class BallController : MonoBehaviour
     {
         TryGetComponent(out rb);
         Direcao = Random.insideUnitCircle;
+        Direcao = new Vector2(Direcao.x, 1);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Direcao = Vector2.Reflect(Direcao, collision.contacts[0].normal);
+        if(collision.contacts.Length == 1 ) {
+            Direcao = Vector2.Reflect(Direcao, collision.contacts[0].normal);
+        }
+
+        else
+        {
+            Vector2 normalMedia = Vector2.zero;
+            foreach (var ponto in collision.contacts)
+            {
+                Direcao = (Direcao + ponto.normal) / 2;
+            }
+        }
         
         if (collision.gameObject.CompareTag("Block")){
             Destroy (collision.gameObject);
+        }
+        
+        if (collision.gameObject.CompareTag("Ref"))
+        {
+            collision.gameObject.GetComponent<BlocoReforcado>().TomouHit();
+            
         }
         
         if (collision.gameObject.CompareTag("GameOver")){

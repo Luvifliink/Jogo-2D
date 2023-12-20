@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        Invoke(nameof(Recarregar), 3);
+        Invoke(nameof(Recarregar), 2);
     }
 
     void Recarregar()
